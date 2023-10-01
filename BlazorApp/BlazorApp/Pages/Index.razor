@@ -1,0 +1,25 @@
+﻿@page "/"
+
+@inject Greeter.GreeterClient grpcClient
+
+<PageTitle>Index</PageTitle>
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<SurveyPrompt Title="How is Blazor working for you?" />
+
+<button @onclick="CallGrpcMethod">Call gRPC Method</button>
+<p>@msg</p>
+
+@code {
+    private string msg = "";
+
+    private async Task CallGrpcMethod()
+    {
+        msg = "Loading...";
+        var res = await grpcClient.SayHelloAsync(new HelloRequest { Name = "client" });
+        msg = res.Message;
+    }
+}
